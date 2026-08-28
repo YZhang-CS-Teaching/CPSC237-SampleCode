@@ -1,2 +1,1 @@
-# CPSC237 Spring 2026
-# Sample Code
+# CPSC237 Sample Code
