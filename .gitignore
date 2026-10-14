@@ -1,0 +1,22 @@
+# Environment variables / secrets
+.env
+autograder.py
+
+# C++ compiled files
+a.out
+*.o
+*~
+
+# Executables
+*.exe
+
+# Build directories
+build/
+bin/
+
+# macOS
+.DS_Store
+
+# VS Code
+.vscode/
+
