@@ -9,7 +9,6 @@
 #ifndef BINARY_SEARCH_TREE_
 #define BINARY_SEARCH_TREE_
 
-#include <memory>
 #include "BinaryTreeInterface.h"
 #include "BinaryNode.h"
 #include "BinaryNodeTree.h"
@@ -20,7 +19,7 @@ template<class ItemType>
 class BinarySearchTree : public BinaryNodeTree<ItemType>
 {
 private:
-   std::shared_ptr<BinaryNode<ItemType>> rootPtr;
+   BinaryNode<ItemType>* rootPtr;
    
 protected:
    //------------------------------------------------------------
@@ -29,29 +28,29 @@ protected:
    //------------------------------------------------------------
    // Recursively finds where the given node should be placed and
    // inserts it in a leaf at that point.
-  auto placeNode(std::shared_ptr<BinaryNode<ItemType>> subTreePtr,
-                                       std::shared_ptr<BinaryNode<ItemType>> newNode);
+  BinaryNode<ItemType>* placeNode(BinaryNode<ItemType>* subTreePtr,
+                                       BinaryNode<ItemType>* newNode);
    
    // Removes the given target value from the tree while maintaining a
    // binary search tree.
-   std::shared_ptr<BinaryNode<ItemType>> removeValue(std::shared_ptr<BinaryNode<ItemType>> subTreePtr,
+   BinaryNode<ItemType>* removeValue(BinaryNode<ItemType>* subTreePtr,
                                      const ItemType target,
                                      bool& success) override;
    
    // Removes a given node from a tree while maintaining a
    // binary search tree.
-   auto removeNode(std::shared_ptr<BinaryNode<ItemType>> nodePtr);
+   BinaryNode<ItemType>* removeNode(BinaryNode<ItemType>* nodePtr);
    
    // Removes the leftmost node in the left subtree of the node
    // pointed to by nodePtr.
    // Sets inorderSuccessor to the value in this node.
    // Returns a pointer to the revised subtree.
-   auto removeLeftmostNode(std::shared_ptr<BinaryNode<ItemType>> subTreePtr,
+   BinaryNode<ItemType>* removeLeftmostNode(BinaryNode<ItemType>* subTreePtr,
                                             ItemType& inorderSuccessor);
    
    // Returns a pointer to the node containing the given value,
    // or nullptr if not found.
-   auto findNode(std::shared_ptr<BinaryNode<ItemType>> treePtr,
+   BinaryNode<ItemType>* findNode(BinaryNode<ItemType>* treePtr,
                                   const ItemType& target) const;
    
 public:
