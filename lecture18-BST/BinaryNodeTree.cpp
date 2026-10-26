@@ -6,6 +6,7 @@
 #include "BinaryNodeTree.h" 
 #include "BinaryNode.h" 
 #include <iostream>
+#include <algorithm>
 
 //////////////////////////////////////////////////////////////
 //      Protected Utility Methods Section
