@@ -238,8 +238,8 @@ BinaryNodeTree<ItemType>::BinaryNodeTree(const ItemType& rootItem)
 
 template<class ItemType>
 BinaryNodeTree<ItemType>::BinaryNodeTree(const ItemType& rootItem,
-                                          const const BinaryNodeTree<ItemType>* leftTreePtr,
-                                          const const BinaryNodeTree<ItemType>* rightTreePtr)
+                                          const BinaryNodeTree<ItemType>* leftTreePtr,
+                                          const BinaryNodeTree<ItemType>* rightTreePtr)
       :rootPtr(new BinaryNode<ItemType>(rootItem,
                                                 copyTree(leftTreePtr->rootPtr),
                                                 copyTree(rightTreePtr->rootPtr)))
