@@ -175,7 +175,8 @@ BinarySearchTree<ItemType>::BinarySearchTree(const BinarySearchTree<ItemType>& t
 template<class ItemType>
 BinarySearchTree<ItemType>::~BinarySearchTree()
 {
-   this->destroyTree(rootPtr); // Call inherited method
+   // The base-class destructor releases the nodes.
+   // Do not destroy rootPtr here, or the nodes would be deleted twice.
 }  // end destructor
 
 
