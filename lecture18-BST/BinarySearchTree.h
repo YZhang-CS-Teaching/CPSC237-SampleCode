@@ -69,7 +69,7 @@ public:
    int getHeight() const override;
    int getNumberOfNodes() const override;
    ItemType getRootData() const override;
-   void setRootData(const ItemType& newData) const;
+   void setRootData(const ItemType& newData) override;
    bool add(const ItemType& newEntry) override;
    bool remove(const ItemType& anEntry) override;
    void clear() override;
