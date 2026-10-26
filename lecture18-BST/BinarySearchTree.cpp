@@ -158,7 +158,8 @@ BinaryNode<ItemType>* BinarySearchTree<ItemType>::findNode(BinaryNode<ItemType>*
 
 template<class ItemType>
 BinarySearchTree<ItemType>::BinarySearchTree()
-{   }  // end default constructor
+   : rootPtr(nullptr)
+{  }  // end default constructor
 
 template<class ItemType>
 BinarySearchTree<ItemType>::BinarySearchTree(const ItemType& rootItem)
@@ -218,7 +219,7 @@ ItemType BinarySearchTree<ItemType>::getRootData() const
 
 // Must override setRootData to disable its affect:
 template<class ItemType>
-void BinarySearchTree<ItemType>::setRootData(const ItemType& newItem) const
+void BinarySearchTree<ItemType>::setRootData(const ItemType& newItem)
 {
    throw PrecondViolatedExcep("Cannot change root value in a BST!");
 }  // end setRootData
