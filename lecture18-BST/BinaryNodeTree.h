@@ -81,12 +81,12 @@ public:
    bool isEmpty() const;
    int getHeight() const;
    int getNumberOfNodes() const;
-   ItemType getRootData() const throw(PrecondViolatedExcep);
+   ItemType getRootData() const;
    void setRootData(const ItemType& newData);
    bool add(const ItemType& newData); // Adds a node
    bool remove(const ItemType& data); // Removes a node
    void clear();
-   ItemType getEntry(const ItemType& anEntry) const throw(NotFoundException);
+   ItemType getEntry(const ItemType& anEntry) const;
    bool contains(const ItemType& anEntry) const;
    
    //------------------------------------------------------------
