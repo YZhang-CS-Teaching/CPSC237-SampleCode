@@ -8,7 +8,7 @@
 
 template<class ItemType>
 BinaryNode<ItemType>::BinaryNode()
-      : item(nullptr), leftChildPtr(nullptr), rightChildPtr(nullptr)
+      : item(), leftChildPtr(nullptr), rightChildPtr(nullptr)
 { }  // end default constructor
 
 template<class ItemType>
@@ -18,8 +18,8 @@ BinaryNode<ItemType>::BinaryNode(const ItemType& anItem)
 
 template<class ItemType>
 BinaryNode<ItemType>::BinaryNode(const ItemType& anItem,
-                                    std::shared_ptr<BinaryNode<ItemType>> leftPtr,
-                                    std::shared_ptr<BinaryNode<ItemType>> rightPtr)
+                                    BinaryNode<ItemType>* leftPtr,
+                                    BinaryNode<ItemType>* rightPtr)
       : item(anItem), leftChildPtr(leftPtr), rightChildPtr(rightPtr)
 { }  // end constructor
 
@@ -42,25 +42,25 @@ bool BinaryNode<ItemType>::isLeaf() const
 }
 
 template<class ItemType>
-void BinaryNode<ItemType>::setLeftChildPtr(std::shared_ptr<BinaryNode<ItemType>> leftPtr)
+void BinaryNode<ItemType>::setLeftChildPtr(BinaryNode<ItemType>* leftPtr)
 {
    leftChildPtr = leftPtr;
 }  // end setLeftChildPtr
 
 template<class ItemType>
-void BinaryNode<ItemType>::setRightChildPtr(std::shared_ptr<BinaryNode<ItemType>> rightPtr)
+void BinaryNode<ItemType>::setRightChildPtr(BinaryNode<ItemType>* rightPtr)
 {
    rightChildPtr = rightPtr;
 }  // end setRightChildPtr
 
 template<class ItemType>
-auto BinaryNode<ItemType>::getLeftChildPtr() const
+BinaryNode<ItemType>* BinaryNode<ItemType>::getLeftChildPtr() const
 {
    return leftChildPtr;
 }  // end getLeftChildPtr		
 
 template<class ItemType>
-auto BinaryNode<ItemType>::getRightChildPtr() const
+BinaryNode<ItemType>* BinaryNode<ItemType>::getRightChildPtr() const
 {
    return rightChildPtr;
 }  // end getRightChildPtr		
