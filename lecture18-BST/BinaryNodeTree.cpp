@@ -228,6 +228,7 @@ void BinaryNodeTree<ItemType>::postorder(void visit(ItemType&), BinaryNode<ItemT
 
 template<class ItemType>
 BinaryNodeTree<ItemType>::BinaryNodeTree()
+   : rootPtr(nullptr)
 {  }  // end default constructor
 
 template<class ItemType>
