@@ -69,8 +69,8 @@ public:
    BinaryNodeTree();
    BinaryNodeTree(const ItemType& rootItem);
    BinaryNodeTree(const ItemType& rootItem,
-                   const const BinaryNodeTree<ItemType>* leftTreePtr,
-                   const const BinaryNodeTree<ItemType>* rightTreePtr);
+                   const BinaryNodeTree<ItemType>* leftTreePtr,
+                   const BinaryNodeTree<ItemType>* rightTreePtr);
    BinaryNodeTree(const BinaryNodeTree<ItemType>& tree);
    virtual ~BinaryNodeTree();
    
