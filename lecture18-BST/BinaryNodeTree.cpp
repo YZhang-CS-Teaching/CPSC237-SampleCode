@@ -285,7 +285,7 @@ void BinaryNodeTree<ItemType>::clear()
 }  // end clear
 
 template<class ItemType>
-ItemType BinaryNodeTree<ItemType>::getRootData() const throw(PrecondViolatedExcep)
+ItemType BinaryNodeTree<ItemType>::getRootData() const
 {
    if (isEmpty())
       throw PrecondViolatedExcep("getRootData() called with empty tree."); 
@@ -319,7 +319,7 @@ bool BinaryNodeTree<ItemType>::remove(const ItemType& target)
 }  // end remove
 
 template<class ItemType>
-ItemType BinaryNodeTree<ItemType>::getEntry(const ItemType& anEntry) const throw(NotFoundException)
+ItemType BinaryNodeTree<ItemType>::getEntry(const ItemType& anEntry) const
 {
    bool isSuccessful = false;
    auto binaryNodePtr = findNode(rootPtr, anEntry, isSuccessful);
