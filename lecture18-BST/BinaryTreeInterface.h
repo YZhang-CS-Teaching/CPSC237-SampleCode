@@ -60,8 +60,7 @@ public:
     @param anEntry  The entry to locate.
     @return  The entry in the binary tree that matches the given entry.
     @throw  NotFoundException if the given entry is not in the tree. */
-   virtual ItemType getEntry(const ItemType& anEntry) const
-                    throw(NotFoundException) = 0;
+   virtual ItemType getEntry(const ItemType& anEntry) const = 0;
    
    /** Tests whether a given entry occurs in this binary tree.
     @post  The binary search tree is unchanged.
