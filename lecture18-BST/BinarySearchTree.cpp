@@ -14,8 +14,8 @@
 //////////////////////////////////////////////////////////////
 
 template<class ItemType>
-auto BinarySearchTree<ItemType>::placeNode(std::shared_ptr<BinaryNode<ItemType>> subTreePtr,
-                                                                std::shared_ptr<BinaryNode<ItemType>> newNodePtr)
+BinaryNode<ItemType>* BinarySearchTree<ItemType>::placeNode(BinaryNode<ItemType>* subTreePtr,
+                                                                BinaryNode<ItemType>* newNodePtr)
 {
    if (subTreePtr == nullptr)
       return newNodePtr;
@@ -31,7 +31,7 @@ auto BinarySearchTree<ItemType>::placeNode(std::shared_ptr<BinaryNode<ItemType>>
 }  // end placeNode
 
 template<class ItemType>
-std::shared_ptr<BinaryNode<ItemType>> BinarySearchTree<ItemType>::removeValue(std::shared_ptr<BinaryNode<ItemType>> subTreePtr,
+BinaryNode<ItemType>* BinarySearchTree<ItemType>::removeValue(BinaryNode<ItemType>* subTreePtr,
                                                               const ItemType target, 
                                                               bool& success)
 {
@@ -65,62 +65,38 @@ std::shared_ptr<BinaryNode<ItemType>> BinarySearchTree<ItemType>::removeValue(st
 }  // end removeValue
 
 template<class ItemType>
-auto BinarySearchTree<ItemType>::removeNode(std::shared_ptr<BinaryNode<ItemType>> nodePtr)
+BinaryNode<ItemType>* BinarySearchTree<ItemType>::removeNode(BinaryNode<ItemType>* nodePtr)
 {
-   // Case 1) Node is a leaf - it is deleted
-   // Case 2) Node has one child - parent adopts child
-   // Case 3) Node has two children:
-   //               Traditional implementation: Find successor node.
-   //               Alternate implementation: Find successor value and replace node's value;
-   //                  alternate does not need pass-by-reference
-   if (nodePtr->isLeaf())
+   if (nodePtr->getLeftChildPtr() == nullptr && nodePtr->getRightChildPtr() == nullptr)
    {
-      nodePtr.reset();
-      return nodePtr; // delete and return nullptr
+      delete nodePtr;
+      return nullptr;
    }
-   else if (nodePtr->getLeftChildPtr() == nullptr)  // Has rightChild only
+   else if (nodePtr->getLeftChildPtr() == nullptr)
    {
-      return nodePtr->getRightChildPtr();
+      BinaryNode<ItemType>* rightChildPtr = nodePtr->getRightChildPtr();
+      nodePtr->setRightChildPtr(nullptr);
+      delete nodePtr;
+      return rightChildPtr;
    }
-   else if (nodePtr->getRightChildPtr() == nullptr) // Has left child only
+   else if (nodePtr->getRightChildPtr() == nullptr)
    {
-      return nodePtr->getLeftChildPtr();
+      BinaryNode<ItemType>* leftChildPtr = nodePtr->getLeftChildPtr();
+      nodePtr->setLeftChildPtr(nullptr);
+      delete nodePtr;
+      return leftChildPtr;
    }
-   else                                             // Has two children
+   else
    {
-      // Traditional way to remove a value in a node with two children
-      ItemType newNodeValue;
-      nodePtr->setRightChildPtr(removeLeftmostNode(nodePtr->getRightChildPtr(), newNodeValue));
-      nodePtr->setItem(newNodeValue);
+      ItemType successorValue;
+      nodePtr->setRightChildPtr(removeLeftmostNode(nodePtr->getRightChildPtr(), successorValue));
+      nodePtr->setItem(successorValue);
       return nodePtr;
-      
-      // Alernative way to remove a value in a node with two children; does not require pass-by-reference.
-      // We need to check whether this right child has a left child.
-      // This is similar to the base case in "findSuccessorValue" but we need to remove the
-      // special case where the right child *is* the inorder successor
-/*
-      std::shared_ptr<BinaryNode<ItemType>> myRightChildPtr = nodePtr->getRightChildPtr();
-      std::shared_ptr<BinaryNode<ItemType>> myLeftGrandChildPtr = myRightChildPtr->getLeftChildPtr();
-      
-      // Special case - right child is successor
-      if (myLeftGrandChildPtr == nullptr) 
-      {
-         nodePtr->setItem(myRightChildPtr->getItem());
-         nodePtr->setRightChildPtr(removeNode(myRightChildPtr));
-         return nodePtr;
-      } 
-      else 
-      {
-         // Now we can recurse
-         nodePtr->setItem(findSuccessorValue(nodePtr->getRightChildPtr()));
-         return nodePtr;
-      }  // end if
-*/
-   }  // end if
-}  // end removeNode
+   }
+}
 
 template<class ItemType> 
-auto BinarySearchTree<ItemType>::removeLeftmostNode(std::shared_ptr<BinaryNode<ItemType>> nodePtr,
+BinaryNode<ItemType>* BinarySearchTree<ItemType>::removeLeftmostNode(BinaryNode<ItemType>* nodePtr,
                                                                      ItemType& inorderSuccessor)
 {
    if (nodePtr->getLeftChildPtr() == nullptr)
@@ -137,9 +113,9 @@ auto BinarySearchTree<ItemType>::removeLeftmostNode(std::shared_ptr<BinaryNode<I
 
 /*
 template<class ItemType>
-ItemType BinarySearchTree<ItemType>::findSuccessorValue(std::shared_ptr<BinaryNode<ItemType>> subTreePtr)
+ItemType BinarySearchTree<ItemType>::findSuccessorValue(BinaryNode<ItemType>* subTreePtr)
 {
-   std::shared_ptr<BinaryNode<ItemType>> myLeftChildPtr = subTreePtr->getLeftChildPtr();
+   BinaryNode<ItemType>* myLeftChildPtr = subTreePtr->getLeftChildPtr();
    if (myLeftChildPtr->getLeftChildPtr() == nullptr) {
       ItemType nodeItemValue = myLeftChildPtr->getItem();
       subTreePtr->setLeftChildPtr(removeNode(myLeftChildPtr));
@@ -154,7 +130,7 @@ ItemType BinarySearchTree<ItemType>::findSuccessorValue(std::shared_ptr<BinaryNo
 
 // Override findNode because now we can use a binary search:
 template<class ItemType>
-auto BinarySearchTree<ItemType>::findNode(std::shared_ptr<BinaryNode<ItemType>> subTreePtr,
+BinaryNode<ItemType>* BinarySearchTree<ItemType>::findNode(BinaryNode<ItemType>* subTreePtr,
                                                            const ItemType& target) const 
 {
    // Uses a binary search 
@@ -186,7 +162,7 @@ BinarySearchTree<ItemType>::BinarySearchTree()
 
 template<class ItemType>
 BinarySearchTree<ItemType>::BinarySearchTree(const ItemType& rootItem)
-: rootPtr(std::make_shared<BinaryNode<ItemType>>(rootItem, nullptr, nullptr))
+: rootPtr(new BinaryNode<ItemType>(rootItem, nullptr, nullptr))
 {  }  // end constructor
 
 template<class ItemType>
@@ -228,7 +204,7 @@ template<class ItemType>
 void BinarySearchTree<ItemType>::clear()
 {
    this->destroyTree(rootPtr); // Call inherited method
-   rootPtr.reset();
+   rootPtr = nullptr;
 }  // end clear
 
 template<class ItemType>
@@ -250,7 +226,7 @@ void BinarySearchTree<ItemType>::setRootData(const ItemType& newItem) const
 template<class ItemType>
 bool BinarySearchTree<ItemType>::add(const ItemType& newData)
 {
-   auto newNodePtr = std::make_shared<BinaryNode<ItemType>>(newData);
+   BinaryNode<ItemType>* newNodePtr = new BinaryNode<ItemType>(newData);
    rootPtr = placeNode(rootPtr, newNodePtr);
    
    return true;
@@ -269,7 +245,7 @@ bool BinarySearchTree<ItemType>::remove(const ItemType& target)
 template<class ItemType>
 ItemType BinarySearchTree<ItemType>::getEntry(const ItemType& anEntry) const
 {
-   std::shared_ptr<BinaryNode<ItemType>> nodeWithEntry = findNode(rootPtr, anEntry);
+   BinaryNode<ItemType>* nodeWithEntry = findNode(rootPtr, anEntry);
    if (nodeWithEntry == nullptr)
       throw NotFoundException("Entry not found in tree.");
    else
@@ -312,16 +288,12 @@ void BinarySearchTree<ItemType>::postorderTraverse(void visit(ItemType&)) const
 //////////////////////////////////////////////////////////////
 
 template<class ItemType>
-BinarySearchTree<ItemType>& BinarySearchTree<ItemType>::
-                            operator=(const BinarySearchTree<ItemType>& rightHandSide)
+BinarySearchTree<ItemType>& BinarySearchTree<ItemType>::operator=(const BinarySearchTree<ItemType>& rightHandSide)
 {
-   if (!isEmpty())
+   if (this != &rightHandSide)
+   {
       clear();
-   this = copyTree(&rightHandSide); // Call inherited method
-   
+      rootPtr = this->copyTree(rightHandSide.rootPtr);
+   }
    return *this;
-}  // end operator=
-
-
-
-
+}
