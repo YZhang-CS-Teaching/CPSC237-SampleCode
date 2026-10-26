@@ -232,7 +232,7 @@ void BinarySearchTree<ItemType>::clear()
 }  // end clear
 
 template<class ItemType>
-ItemType BinarySearchTree<ItemType>::getRootData() const throw(PrecondViolatedExcep)
+ItemType BinarySearchTree<ItemType>::getRootData() const
 {
    if (isEmpty())
       throw PrecondViolatedExcep("getRootData() called with empty tree."); 
@@ -242,7 +242,7 @@ ItemType BinarySearchTree<ItemType>::getRootData() const throw(PrecondViolatedEx
 
 // Must override setRootData to disable its affect:
 template<class ItemType>
-void BinarySearchTree<ItemType>::setRootData(const ItemType& newItem) const throw(PrecondViolatedExcep)
+void BinarySearchTree<ItemType>::setRootData(const ItemType& newItem) const
 {
    throw PrecondViolatedExcep("Cannot change root value in a BST!");
 }  // end setRootData
@@ -267,7 +267,7 @@ bool BinarySearchTree<ItemType>::remove(const ItemType& target)
 
 // Override getEntry to use our improved findNode:
 template<class ItemType>
-ItemType BinarySearchTree<ItemType>::getEntry(const ItemType& anEntry) const throw(NotFoundException)
+ItemType BinarySearchTree<ItemType>::getEntry(const ItemType& anEntry) const
 {
    std::shared_ptr<BinaryNode<ItemType>> nodeWithEntry = findNode(rootPtr, anEntry);
    if (nodeWithEntry == nullptr)
@@ -281,7 +281,7 @@ template<class ItemType>
 bool BinarySearchTree<ItemType>::contains(const ItemType& anEntry) const
 {
 
-   return (findNode(rootPtr, anEntry) == nullptr);  // nullptr is same as false
+   return (findNode(rootPtr, anEntry) != nullptr);  // true when found
 }  // end contains
 
 //////////////////////////////////////////////////////////////
