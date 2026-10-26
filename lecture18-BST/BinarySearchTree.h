@@ -69,12 +69,12 @@ public:
     bool isEmpty() const override;
    int getHeight() const override;
    int getNumberOfNodes() const override;
-   ItemType getRootData() const throw(PrecondViolatedExcep) override;
-   void setRootData(const ItemType& newData) const throw(PrecondViolatedExcep);
+   ItemType getRootData() const override;
+   void setRootData(const ItemType& newData) const;
    bool add(const ItemType& newEntry) override;
    bool remove(const ItemType& anEntry) override;
    void clear() override;
-   ItemType getEntry(const ItemType& anEntry) const throw(NotFoundException) override;
+   ItemType getEntry(const ItemType& anEntry) const override;
    bool contains(const ItemType& anEntry) const override;
    
    //------------------------------------------------------------
