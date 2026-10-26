@@ -8,7 +8,6 @@
 #ifndef BINARY_NODE_TREE_
 #define BINARY_NODE_TREE_
 
-#include <memory>
 #include "BinaryTreeInterface.h"
 #include "BinaryNode.h"
 #include "PrecondViolatedExcep.h"
@@ -18,7 +17,7 @@ template<class ItemType>
 class BinaryNodeTree : public BinaryTreeInterface<ItemType>
 {
 private:
-   std::shared_ptr<BinaryNode<ItemType>> rootPtr;
+   BinaryNode<ItemType>* rootPtr;
    
 protected:
    //------------------------------------------------------------
@@ -26,42 +25,42 @@ protected:
    // Recursive helper methods for the public methods.
    //------------------------------------------------------------
    
-   int getHeightHelper(std::shared_ptr<BinaryNode<ItemType>> subTreePtr) const;
-   int getNumberOfNodesHelper(std::shared_ptr<BinaryNode<ItemType>> subTreePtr) const;
+   int getHeightHelper(BinaryNode<ItemType>* subTreePtr) const;
+   int getNumberOfNodesHelper(BinaryNode<ItemType>* subTreePtr) const;
    
    // Recursively adds a new node to the tree in a left/right fashion to
    // keep the tree balanced.
-   auto balancedAdd(std::shared_ptr<BinaryNode<ItemType>> subTreePtr,
-                                     std::shared_ptr<BinaryNode<ItemType>> newNodePtr);
+   BinaryNode<ItemType>* balancedAdd(BinaryNode<ItemType>* subTreePtr,
+                                     BinaryNode<ItemType>* newNodePtr);
    
    // Copies values up the tree to overwrite value in current node until
    // a leaf is reached; the leaf is then removed, since its value is
    // stored in the parent.
-   std::shared_ptr<BinaryNode<ItemType>> moveValuesUpTree(std::shared_ptr<BinaryNode<ItemType>> subTreePtr);
+   BinaryNode<ItemType>* moveValuesUpTree(BinaryNode<ItemType>* subTreePtr);
    
    // Removes the target value from the tree by calling moveValuesUpTree
    // to overwrite value with value from child.
-   virtual std::shared_ptr<BinaryNode<ItemType>>
-               removeValue(std::shared_ptr<BinaryNode<ItemType>> subTreePtr,
+   virtual BinaryNode<ItemType>*
+               removeValue(BinaryNode<ItemType>* subTreePtr,
                                      const ItemType target, bool& success);
    
    // Recursively searches for target value in the tree by using a
    // preorder traversal.
-   auto findNode(std::shared_ptr<BinaryNode<ItemType>> treePtr,
+   BinaryNode<ItemType>* findNode(BinaryNode<ItemType>* treePtr,
                                   const ItemType& target,
                                   bool& success) const;
    
    // Copies the tree rooted at treePtr and returns a pointer to
    // the copy.
-   std::shared_ptr<BinaryNode<ItemType>> copyTree(const std::shared_ptr<BinaryNode<ItemType>> oldTreeRootPtr) const;
+   BinaryNode<ItemType>* copyTree(const BinaryNode<ItemType>* oldTreeRootPtr) const;
    
    // Recursively deletes all nodes from the tree.
-   void destroyTree(std::shared_ptr<BinaryNode<ItemType>> subTreePtr);
+   void destroyTree(BinaryNode<ItemType>* subTreePtr);
    
    // Recursive traversal helper methods:
-   void preorder(void visit(ItemType&), std::shared_ptr<BinaryNode<ItemType>> treePtr) const;
-   void inorder(void visit(ItemType&), std::shared_ptr<BinaryNode<ItemType>> treePtr) const;
-   void postorder(void visit(ItemType&), std::shared_ptr<BinaryNode<ItemType>> treePtr) const;
+   void preorder(void visit(ItemType&), BinaryNode<ItemType>* treePtr) const;
+   void inorder(void visit(ItemType&), BinaryNode<ItemType>* treePtr) const;
+   void postorder(void visit(ItemType&), BinaryNode<ItemType>* treePtr) const;
    
 public:
    //------------------------------------------------------------
@@ -70,8 +69,8 @@ public:
    BinaryNodeTree();
    BinaryNodeTree(const ItemType& rootItem);
    BinaryNodeTree(const ItemType& rootItem,
-                   const std::shared_ptr<BinaryNodeTree<ItemType>> leftTreePtr,
-                   const std::shared_ptr<BinaryNodeTree<ItemType>> rightTreePtr);
+                   const const BinaryNodeTree<ItemType>* leftTreePtr,
+                   const const BinaryNodeTree<ItemType>* rightTreePtr);
    BinaryNodeTree(const BinaryNodeTree<ItemType>& tree);
    virtual ~BinaryNodeTree();
    
