@@ -152,7 +152,7 @@ BinaryNode<ItemType>* BinaryNodeTree<ItemType>::findNode(BinaryNode<ItemType>* t
 template<class ItemType>
 BinaryNode<ItemType>* BinaryNodeTree<ItemType>::copyTree(const BinaryNode<ItemType>* oldTreeRootPtr) const
 {
-   BinaryNode<ItemType>* newTreePtr;
+   BinaryNode<ItemType>* newTreePtr = nullptr;
    
    // Copy tree nodes during a preorder traversal
    if (oldTreeRootPtr != nullptr)
